@@ -1,16 +1,12 @@
-package com.example.QuestionPortalBackend.DTO;
-
-import com.example.QuestionPortalBackend.models.AnswerType;
-import com.example.QuestionPortalBackend.models.User;
-import jakarta.persistence.*;
+package com.example.QuestionPortalBackend.dto;
 
 public class QuestionDTO {
     private Integer id;
     private String question;
     private String answer;
     private String answerType;
-    private Integer forUser_id;
-    private Integer fromUser_id;
+    private Integer forUserId;
+    private Integer fromUserId;
 
     public Integer getId() {
         return id;
@@ -44,19 +40,19 @@ public class QuestionDTO {
         this.answerType = answerType;
     }
 
-    public Integer getForUser_id() {
-        return forUser_id;
+    public Integer getForUserId() {
+        return forUserId;
     }
 
-    public void setForUser_id(Integer forUser_id) {
-        this.forUser_id = forUser_id;
+    public void setForUserId(Integer forUserId) {
+        this.forUserId = forUserId;
     }
 
-    public Integer getFromUser_id() {
-        return fromUser_id;
+    public Integer getFromUserId() {
+        return fromUserId;
     }
 
-    public void setFromUser_id(Integer fromUser_id) {
-        this.fromUser_id = fromUser_id;
+    public void setFromUserId(Integer fromUserId) {
+        this.fromUserId = fromUserId;
     }
 }

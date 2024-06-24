@@ -1,7 +1,7 @@
 package com.example.QuestionPortalBackend.controllers;
 
-import com.example.QuestionPortalBackend.DTO.LoginRequest;
-import com.example.QuestionPortalBackend.DTO.UserDTO;
+import com.example.QuestionPortalBackend.dto.LoginRequest;
+import com.example.QuestionPortalBackend.dto.UserDTO;
 import com.example.QuestionPortalBackend.exceptions.UserAlreadyExistsException;
 import com.example.QuestionPortalBackend.models.User;
 import com.example.QuestionPortalBackend.security.JWTUtil;

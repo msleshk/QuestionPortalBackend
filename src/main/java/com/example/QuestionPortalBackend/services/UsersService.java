@@ -1,6 +1,6 @@
 package com.example.QuestionPortalBackend.services;
 
-import com.example.QuestionPortalBackend.DTO.UserToUpdateDTO;
+import com.example.QuestionPortalBackend.dto.UserToUpdateDTO;
 import com.example.QuestionPortalBackend.exceptions.UserAlreadyExistsException;
 import com.example.QuestionPortalBackend.models.User;
 import com.example.QuestionPortalBackend.repositories.UsersRepository;

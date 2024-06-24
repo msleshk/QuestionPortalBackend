@@ -1,8 +1,7 @@
 package com.example.QuestionPortalBackend.controllers;
 
-import com.example.QuestionPortalBackend.DTO.UserDTO;
-import com.example.QuestionPortalBackend.DTO.UserToUpdateDTO;
-import com.example.QuestionPortalBackend.services.AuthService;
+import com.example.QuestionPortalBackend.dto.UserDTO;
+import com.example.QuestionPortalBackend.dto.UserToUpdateDTO;
 import com.example.QuestionPortalBackend.services.UsersService;
 import com.example.QuestionPortalBackend.util.UserMapper;
 import jakarta.validation.Valid;

@@ -1,6 +1,6 @@
 package com.example.QuestionPortalBackend.util;
 
-import com.example.QuestionPortalBackend.DTO.UserDTO;
+import com.example.QuestionPortalBackend.dto.UserDTO;
 import com.example.QuestionPortalBackend.models.User;
 import org.springframework.stereotype.Component;
 
