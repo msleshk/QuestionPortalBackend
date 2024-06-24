@@ -1,5 +1,5 @@
 package com.example.QuestionPortalBackend.util;
 
 public class QuestionMapper {
-    //TODO
+    //TODO Create mapper
 }

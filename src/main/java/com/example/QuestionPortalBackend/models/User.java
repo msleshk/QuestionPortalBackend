@@ -1,13 +1,16 @@
 package com.example.QuestionPortalBackend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Users")
 public class User {
-    //TODO Сделать валидацию
+    //TODO Do validation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
