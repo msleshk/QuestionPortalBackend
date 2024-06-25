@@ -18,15 +18,13 @@ public class QuestionController {
         this.questionsService = questionsService;
     }
     @GetMapping("/user/{id}")
-    public ResponseEntity<?> getAllQuestionsByUser(@PathVariable("id") Integer userId){
+    public List<Question> getAllQuestionsByUser(@PathVariable("id") Integer userId){
         //TODO Map to dto and return it
-        List<Question> questionsForUser=questionsService.getQuestionsByUserId(userId);
-        return ResponseEntity.ok(questionsForUser);
+        return questionsService.getQuestionsByUserId(userId);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getQuestion(@PathVariable("id") Integer questionId){
+    public Question getQuestion(@PathVariable("id") Integer questionId){
         //TODO Map to dto and return id
-        Question question= questionsService.findOne(questionId);
-        return ResponseEntity.ok(question);
+        return questionsService.findOne(questionId);
     }
 }

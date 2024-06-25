@@ -19,11 +19,13 @@ public class QuestionsService {
         this.questionsRepository = questionsRepository;
         this.usersService = usersService;
     }
-    public List<Question> getQuestionsByUserId(int userId){
+
+    public List<Question> getQuestionsByUserId(int userId) {
         return questionsRepository.getQuestionsByForUser(usersService.findOne(userId));
     }
-    public Question findOne(int questionId){
-        Optional<Question> questionOptional=questionsRepository.findById(questionId);
+
+    public Question findOne(int questionId) {
+        Optional<Question> questionOptional = questionsRepository.findById(questionId);
         return questionOptional.orElse(null);
     }
 }

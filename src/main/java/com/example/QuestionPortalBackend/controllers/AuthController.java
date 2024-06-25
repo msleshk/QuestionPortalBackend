@@ -40,9 +40,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Map<String, String> performLogin(@RequestBody LoginRequest loginRequest){
-        String jwt=authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
-        User user=usersService.getUserByEmail(loginRequest.getEmail());
+    public Map<String, String> performLogin(@RequestBody LoginRequest loginRequest) {
+        String jwt = authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
+        User user = usersService.getUserByEmail(loginRequest.getEmail());
 
         Map<String, String> response = new HashMap<>();
         response.put("jwt-token", jwt);
@@ -50,23 +50,25 @@ public class AuthController {
         response.put("id", user.getId().toString());
         return response;
     }
+
     @GetMapping("/userInfo")
-    public String getUserInfo(){
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails=(UserDetailsImpl) authentication.getPrincipal();
+    public String getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         return userDetails.getUsername();
     }
+
     @PostMapping("/registration")
-    public ResponseEntity<?> performRegistration(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult){
-        User user= userMapper.toEntity(userDTO);
+    public ResponseEntity<?> performRegistration(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
+        User user = userMapper.toEntity(userDTO);
         userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
-        try{
+        try {
             usersService.registerUser(user);
             return ResponseEntity.ok("User registered successfully!");
-        } catch (UserAlreadyExistsException e){
+        } catch (UserAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }

@@ -25,48 +25,52 @@ public class UsersService {
         this.authService = authService;
         this.emailNotificationSenderService = emailNotificationSenderService;
     }
-    public User findOne(int id){
+
+    public User findOne(int id) {
         Optional<User> userOptional = usersRepository.findById(id);
         return userOptional.orElse(null);
     }
+
     @Transactional
-    public String updateUser(int id, UserToUpdateDTO userToUpdate){
-        User currentUser = usersRepository.findById(id).orElseThrow(()->new IllegalArgumentException("User not found!"));
+    public String updateUser(int id, UserToUpdateDTO userToUpdate) {
+        User currentUser = usersRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found!"));
         currentUser.setFirstName(userToUpdate.getFirstName());
         currentUser.setLastName(userToUpdate.getLastName());
         currentUser.setEmail(userToUpdate.getEmail());
         currentUser.setPhoneNumber(userToUpdate.getPhoneNumber());
-        if (userToUpdate.getCurrentPassword() != null && userToUpdate.getNewPassword() != null){
-            if (!passwordEncoder.matches(userToUpdate.getCurrentPassword(), currentUser.getPassword())){
+        if (userToUpdate.getCurrentPassword() != null && userToUpdate.getNewPassword() != null) {
+            if (!passwordEncoder.matches(userToUpdate.getCurrentPassword(), currentUser.getPassword())) {
                 throw new IllegalArgumentException("Incorrect password!");
             }
             currentUser.setPassword(passwordEncoder.encode(userToUpdate.getNewPassword()));
         }
-        currentUser.setId(id);
         usersRepository.save(currentUser);
         return authService.authenticateUser(userToUpdate.getEmail(), userToUpdate.getNewPassword());
     }
+
     @Transactional
-    public void deleteUser(int id, String password){
-        User user = usersRepository.findById(id).orElseThrow(()->new IllegalArgumentException("User not found!"));
-        if (!passwordEncoder.matches(password, user.getPassword())){
+    public void deleteUser(int id, String password) {
+        User user = usersRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found!"));
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("Incorrect password!");
         }
         usersRepository.delete(user);
         emailNotificationSenderService.sendNotification(user.getEmail(), "Profile delete confirmation",
-                "Dear, "+user.getFirstName()+", your profile was successfully deleted!");
+                "Dear, " + user.getFirstName() + ", your profile was successfully deleted!");
     }
-    public User getUserByEmail(String email){
-        Optional<User> user=usersRepository.findByEmail(email);
-        if (user.isEmpty()){
+
+    public User getUserByEmail(String email) {
+        Optional<User> user = usersRepository.findByEmail(email);
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found!");
         }
         return user.get();
     }
+
     @Transactional
     public void registerUser(User user) throws UserAlreadyExistsException {
-        if (usersRepository.existsUserByEmail(user.getEmail())){
-            throw new UserAlreadyExistsException("Username with email "+user.getEmail()+" already exists!");
+        if (usersRepository.existsUserByEmail(user.getEmail())) {
+            throw new UserAlreadyExistsException("Username with email " + user.getEmail() + " already exists!");
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));

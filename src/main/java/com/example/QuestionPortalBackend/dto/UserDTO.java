@@ -9,7 +9,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     @Email
-    @NotEmpty(message="Email should not be empty")
+    @NotEmpty(message = "Email should not be empty")
     private String email;
 
     @Pattern(regexp = "^\\+375\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2}$\n", message = "Phone number should be in correct format.")

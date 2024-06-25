@@ -12,8 +12,9 @@ public class EmailNotificationSenderService {
     public EmailNotificationSenderService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
-    public void sendNotification(String email, String subject, String text){
-        SimpleMailMessage message=new SimpleMailMessage();
+
+    public void sendNotification(String email, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject(subject);
         message.setText(text);
