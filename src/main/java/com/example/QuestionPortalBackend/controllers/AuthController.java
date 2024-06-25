@@ -41,7 +41,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public Map<String, String> performLogin(@RequestBody LoginRequest loginRequest){
-        String jwt=authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
+        String jwt = authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
         User user=usersService.getUserByEmail(loginRequest.getEmail());
 
         Map<String, String> response = new HashMap<>();
