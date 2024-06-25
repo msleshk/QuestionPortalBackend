@@ -1,6 +1,5 @@
 package com.example.QuestionPortalBackend.services;
 
-import com.example.QuestionPortalBackend.DTO.LoginRequest;
 import com.example.QuestionPortalBackend.security.JWTUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

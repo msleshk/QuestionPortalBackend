@@ -1,7 +1,7 @@
 package com.example.QuestionPortalBackend.controllers;
 
-import com.example.QuestionPortalBackend.DTO.LoginRequest;
-import com.example.QuestionPortalBackend.DTO.UserDTO;
+import com.example.QuestionPortalBackend.dto.LoginRequest;
+import com.example.QuestionPortalBackend.dto.UserDTO;
 import com.example.QuestionPortalBackend.exceptions.UserAlreadyExistsException;
 import com.example.QuestionPortalBackend.models.User;
 import com.example.QuestionPortalBackend.security.JWTUtil;
@@ -10,6 +10,7 @@ import com.example.QuestionPortalBackend.services.AuthService;
 import com.example.QuestionPortalBackend.services.UsersService;
 import com.example.QuestionPortalBackend.util.UserMapper;
 import com.example.QuestionPortalBackend.util.UserValidator;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -42,6 +43,7 @@ public class AuthController {
     public Map<String, String> performLogin(@RequestBody LoginRequest loginRequest){
         String jwt=authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
         User user=usersService.getUserByEmail(loginRequest.getEmail());
+
         Map<String, String> response = new HashMap<>();
         response.put("jwt-token", jwt);
         response.put("firstName", user.getFirstName());
@@ -55,7 +57,7 @@ public class AuthController {
         return userDetails.getUsername();
     }
     @PostMapping("/registration")
-    public ResponseEntity<?> performRegistration(@RequestBody UserDTO userDTO, BindingResult bindingResult){
+    public ResponseEntity<?> performRegistration(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult){
         User user= userMapper.toEntity(userDTO);
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()){
@@ -68,7 +70,5 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
-
-
 
 }

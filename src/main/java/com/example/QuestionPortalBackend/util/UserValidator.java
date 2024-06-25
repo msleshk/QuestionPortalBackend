@@ -23,17 +23,16 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        User user=(User) target;
-        String email=user.getEmail();
-        if (email==null || email.trim().isEmpty()){
+        User user = (User) target;
+        String email = user.getEmail();
+        if (email == null || email.trim().isEmpty()){
             errors.rejectValue("email", "email.empty", "Email is required.");
             return;
         }
-        User existingUser=usersService.getUserByEmail(email);
-        if (existingUser!=null){
+        User existingUser = usersService.getUserByEmail(email);
+        if (existingUser != null){
             errors.rejectValue("email", "email.exist", "User with this email is already exists!");
         }
     }
-
 
 }

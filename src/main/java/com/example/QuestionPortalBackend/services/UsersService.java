@@ -1,6 +1,6 @@
 package com.example.QuestionPortalBackend.services;
 
-import com.example.QuestionPortalBackend.DTO.UserToUpdateDTO;
+import com.example.QuestionPortalBackend.dto.UserToUpdateDTO;
 import com.example.QuestionPortalBackend.exceptions.UserAlreadyExistsException;
 import com.example.QuestionPortalBackend.models.User;
 import com.example.QuestionPortalBackend.repositories.UsersRepository;
@@ -26,17 +26,17 @@ public class UsersService {
         this.emailNotificationSenderService = emailNotificationSenderService;
     }
     public User findOne(int id){
-        Optional<User> userOptional= usersRepository.findById(id);
+        Optional<User> userOptional = usersRepository.findById(id);
         return userOptional.orElse(null);
     }
     @Transactional
     public String updateUser(int id, UserToUpdateDTO userToUpdate){
-        User currentUser=usersRepository.findById(id).orElseThrow(()->new IllegalArgumentException("User not found!"));
+        User currentUser = usersRepository.findById(id).orElseThrow(()->new IllegalArgumentException("User not found!"));
         currentUser.setFirstName(userToUpdate.getFirstName());
         currentUser.setLastName(userToUpdate.getLastName());
         currentUser.setEmail(userToUpdate.getEmail());
         currentUser.setPhoneNumber(userToUpdate.getPhoneNumber());
-        if (userToUpdate.getCurrentPassword()!=null && userToUpdate.getNewPassword()!=null){
+        if (userToUpdate.getCurrentPassword() != null && userToUpdate.getNewPassword() != null){
             if (!passwordEncoder.matches(userToUpdate.getCurrentPassword(), currentUser.getPassword())){
                 throw new IllegalArgumentException("Incorrect password!");
             }
@@ -48,7 +48,7 @@ public class UsersService {
     }
     @Transactional
     public void deleteUser(int id, String password){
-        User user=usersRepository.findById(id).orElseThrow(()->new IllegalArgumentException("User not found!"));
+        User user = usersRepository.findById(id).orElseThrow(()->new IllegalArgumentException("User not found!"));
         if (!passwordEncoder.matches(password, user.getPassword())){
             throw new IllegalArgumentException("Incorrect password!");
         }
