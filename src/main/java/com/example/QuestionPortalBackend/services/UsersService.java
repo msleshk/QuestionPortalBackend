@@ -58,7 +58,8 @@ public class UsersService {
 
     @Transactional
     public void deleteUser(int id, String password) {
-        User user = usersRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found!"));
+        User user = usersRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found!"));
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("Incorrect password!");
         }

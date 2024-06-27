@@ -2,6 +2,7 @@ package com.example.QuestionPortalBackend.controllers;
 
 import com.example.QuestionPortalBackend.dto.UserDTO;
 import com.example.QuestionPortalBackend.dto.UserToUpdateDTO;
+import com.example.QuestionPortalBackend.exceptions.ValidationException;
 import com.example.QuestionPortalBackend.services.UsersService;
 import com.example.QuestionPortalBackend.util.UserMapper;
 import jakarta.validation.Valid;
@@ -30,35 +31,23 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Integer id, @RequestBody @Valid UserToUpdateDTO userToUpdateDTO,
+    public Map<String, String> updateUser(@PathVariable Integer id, @RequestBody @Valid UserToUpdateDTO userToUpdateDTO,
                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
-        }
-        try {
-            String jwt = usersService.updateUser(id, userToUpdateDTO);
-            Map<String, String> responseMap = new HashMap<>();
-            responseMap.put("jwt-token", jwt);
-            responseMap.put("firstName", userToUpdateDTO.getFirstName());
-
-            return ResponseEntity.ok(responseMap);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update user");
+            throw new ValidationException(bindingResult.getAllErrors().toString());
         }
 
+        String jwt = usersService.updateUser(id, userToUpdateDTO);
+        Map<String, String> responseMap = new HashMap<>();
+        responseMap.put("jwt-token", jwt);
+        responseMap.put("firstName", userToUpdateDTO.getFirstName());
+
+        return responseMap;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
-        try {
-            usersService.deleteUser(id, userDTO.getPassword());
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete user");
-        }
+    public String deleteUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        usersService.deleteUser(id, userDTO.getPassword());
+        return "User deleted successfully";
     }
 }

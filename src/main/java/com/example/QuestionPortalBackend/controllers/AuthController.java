@@ -3,6 +3,7 @@ package com.example.QuestionPortalBackend.controllers;
 import com.example.QuestionPortalBackend.dto.LoginRequest;
 import com.example.QuestionPortalBackend.dto.UserDTO;
 import com.example.QuestionPortalBackend.exceptions.UserAlreadyExistsException;
+import com.example.QuestionPortalBackend.exceptions.ValidationException;
 import com.example.QuestionPortalBackend.models.User;
 import com.example.QuestionPortalBackend.security.UserDetailsImpl;
 import com.example.QuestionPortalBackend.services.AuthService;
@@ -51,16 +52,13 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<?> performRegistration(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
+    public String performRegistration(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+            throw new ValidationException(bindingResult.getAllErrors().toString());
         }
-        try {
-            usersService.registerUser(userDTO);
-            return ResponseEntity.ok("User registered successfully!");
-        } catch (UserAlreadyExistsException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+
+        usersService.registerUser(userDTO);
+        return "User registered successfully!";
     }
 
 }
