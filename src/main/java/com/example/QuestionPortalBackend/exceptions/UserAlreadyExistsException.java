@@ -1,4 +1,4 @@
-package com.example.QuestionPortalBackend.exception;
+package com.example.QuestionPortalBackend.exceptions;
 
 public class UserAlreadyExistsException extends RuntimeException{
     public UserAlreadyExistsException(String message){

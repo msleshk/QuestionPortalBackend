@@ -1,6 +1,5 @@
 package com.example.QuestionPortalBackend.services;
 
-import com.example.QuestionPortalBackend.DTO.LoginRequest;
 import com.example.QuestionPortalBackend.security.JWTUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,9 +16,9 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
-    public String authenticateUser(LoginRequest loginRequest){
+    public String authenticateUser(String email, String password){
         Authentication authentication= authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(email, password)
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return jwtUtil.generateToken(authentication);

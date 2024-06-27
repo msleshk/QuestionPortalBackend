@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Questions")
 public class Question {
-    //TODO Сделать валидацию
+    //TODO Add validation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
