@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Table(name = "Users")
 public class User {
-    //TODO Do validation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

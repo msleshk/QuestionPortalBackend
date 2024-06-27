@@ -1,6 +1,7 @@
 package com.example.QuestionPortalBackend.dto;
 
 public class QuestionDTO {
+    //TODO Add validation
     private Integer id;
     private String question;
     private String answer;

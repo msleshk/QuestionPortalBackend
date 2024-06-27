@@ -1,5 +1,6 @@
 package com.example.QuestionPortalBackend.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 public class EmailNotificationSenderService {
 
     private final JavaMailSender javaMailSender;
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
     public EmailNotificationSenderService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
@@ -18,7 +21,7 @@ public class EmailNotificationSenderService {
         message.setTo(email);
         message.setSubject(subject);
         message.setText(text);
-        message.setFrom("maximo4kahd@mail.ru");
+        message.setFrom(fromEmail);
 
         javaMailSender.send(message);
     }

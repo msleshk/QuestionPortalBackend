@@ -18,16 +18,14 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private final UsersService usersService;
-    private final UserMapper userMapper;
 
-    public UserController(UsersService usersService, UserMapper userMapper) {
+    public UserController(UsersService usersService) {
         this.usersService = usersService;
-        this.userMapper = userMapper;
     }
 
     @GetMapping("/{id}")
     public Map<String, Object> getUser(@PathVariable Integer id) {
-        UserDTO userDTO = userMapper.toDTO(usersService.findOne(id));
+        UserDTO userDTO = usersService.findOne(id);
         return Map.of("user", userDTO);
     }
 
