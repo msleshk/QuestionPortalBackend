@@ -5,7 +5,7 @@ import com.example.QuestionPortalBackend.models.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapper {
+public class UserMapper implements MapperInterface<User, UserDTO>{
     public User toEntity(UserDTO userDTO) {
         User user = new User();
 

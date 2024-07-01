@@ -2,16 +2,12 @@ package com.example.QuestionPortalBackend.controllers;
 
 import com.example.QuestionPortalBackend.dto.LoginRequest;
 import com.example.QuestionPortalBackend.dto.UserDTO;
-import com.example.QuestionPortalBackend.exceptions.UserAlreadyExistsException;
 import com.example.QuestionPortalBackend.exceptions.ValidationException;
-import com.example.QuestionPortalBackend.models.User;
 import com.example.QuestionPortalBackend.security.UserDetailsImpl;
 import com.example.QuestionPortalBackend.services.AuthService;
 import com.example.QuestionPortalBackend.services.UsersService;
-import com.example.QuestionPortalBackend.util.UserMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -33,6 +29,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Perform login", description = "Performs login and responses with map of jwt-token and users firstName, id, email")
     public Map<String, String> performLogin(@RequestBody LoginRequest loginRequest) {
         String jwt = authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
         UserDTO user = usersService.getUserByEmail(loginRequest.getEmail());
@@ -41,6 +38,7 @@ public class AuthController {
         response.put("jwt-token", jwt);
         response.put("firstName", user.getFirstName());
         response.put("id", user.getId().toString());
+        response.put("email", user.getEmail());
         return response;
     }
 
@@ -52,6 +50,7 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
+    @Operation(summary = "User Registration", description = "Registers a new user with the provided details")
     public String performRegistration(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult.getAllErrors().toString());

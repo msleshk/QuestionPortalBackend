@@ -1,9 +1,11 @@
 package com.example.QuestionPortalBackend.dto;
 
+//import io.swagger.annotations.ApiModel;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
+//@ApiModel(description = "User dto")
 public class UserDTO {
     private Integer id;
     private String firstName;
@@ -12,8 +14,9 @@ public class UserDTO {
     @NotEmpty(message = "Email should not be empty")
     private String email;
 
-    @Pattern(regexp = "^\\+375\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2}$\n", message = "Phone number should be in correct format.")
+    @Pattern(regexp = "\\+375\\(\\d{2}\\)\\d{3}-\\d{2}-\\d{2}", message = "Phone number should be in correct format.")
     private String phoneNumber;
+
     @NotEmpty(message = "Password should not be empty")
     private String password;
 

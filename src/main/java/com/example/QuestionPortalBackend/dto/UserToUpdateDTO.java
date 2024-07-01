@@ -1,5 +1,8 @@
 package com.example.QuestionPortalBackend.dto;
 
+//import io.swagger.annotations.ApiModel;
+
+//@ApiModel(description = "User dto for update operation")
 public class UserToUpdateDTO extends UserDTO {
     private String currentPassword;
     private String newPassword;
