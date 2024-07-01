@@ -1,5 +1,9 @@
 package com.example.QuestionPortalBackend.dto;
 
+
+//import io.swagger.annotations.ApiModel;
+
+//@ApiModel(description = "Dto for login request")
 public class LoginRequest {
 
     private String email;

@@ -16,8 +16,9 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
-    public String authenticateUser(String email, String password){
-        Authentication authentication= authenticationManager.authenticate(
+
+    public String authenticateUser(String email, String password) {
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, password)
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -2,9 +2,9 @@ package com.example.QuestionPortalBackend.models;
 
 public enum AnswerType {
     SINGLE_LINE_TEXT,
-    MULTILINE_TEXT,
-    RADIOBUTTON,
+    MULTI_LINE_TEXT,
     CHECKBOX,
     COMBOBOX,
-    DATE
+    DATE,
+    RADIO_BUTTON
 }
