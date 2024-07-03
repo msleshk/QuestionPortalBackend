@@ -1,28 +1,23 @@
 package com.example.QuestionPortalBackend.util;
 
 import com.example.QuestionPortalBackend.dto.QuestionDTO;
+import com.example.QuestionPortalBackend.dto.UserDTO;
 import com.example.QuestionPortalBackend.models.Question;
 import com.example.QuestionPortalBackend.models.QuestionOption;
-import com.example.QuestionPortalBackend.models.User;
-import com.example.QuestionPortalBackend.services.UsersService;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class QuestionMapper implements MapperInterface<Question, QuestionDTO>{
-    private final UsersService usersService;
-    private final UserMapper userMapper;
+public class QuestionMapper {
+    private final UserMapperImpl userMapper;
 
-    public QuestionMapper(UsersService usersService, UserMapper userMapper) {
-        this.usersService = usersService;
+    public QuestionMapper(UserMapperImpl userMapper) {
         this.userMapper = userMapper;
     }
 
-    @Override
-    public Question toEntity(QuestionDTO dto) {
+    public Question toEntity(QuestionDTO dto, UserDTO forUser, UserDTO fromUser) {
         Question question = new Question();
 
         question.setId(dto.getId());
@@ -30,23 +25,22 @@ public class QuestionMapper implements MapperInterface<Question, QuestionDTO>{
         question.setAnswer(dto.getAnswer());
         question.setAnswerType(dto.getAnswerType());
 
-        User fromUser = userMapper.toEntity(usersService
-                .getUserByEmail(dto.getFromUserEmail()));
-        question.setFromUser(fromUser);
-        User forUser = userMapper.toEntity(usersService
-                .getUserByEmail(dto.getForUserEmail()));
-        question.setForUser(forUser);
+//        User fromUser = userMapper.toEntity(usersService
+//                .getUserByEmail(dto.getFromUserEmail()));
+        question.setFromUser(userMapper.toEntity(fromUser));
+//        User forUser = userMapper.toEntity(usersService
+//                .getUserByEmail(dto.getForUserEmail()));
+        question.setForUser(userMapper.toEntity(forUser));
 
         List<QuestionOption> options = dto.getOptions()
-                        .stream()
-                        .map(QuestionOption::new)
-                        .collect(Collectors.toList());
+                .stream()
+                .map(QuestionOption::new)
+                .collect(Collectors.toList());
         question.setQuestionOptions(options);
 
         return question;
     }
 
-    @Override
     public QuestionDTO toDTO(Question question) {
         QuestionDTO questionDTO = new QuestionDTO();
 

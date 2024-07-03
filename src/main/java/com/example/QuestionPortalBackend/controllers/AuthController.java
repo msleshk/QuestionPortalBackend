@@ -6,6 +6,7 @@ import com.example.QuestionPortalBackend.exceptions.ValidationException;
 import com.example.QuestionPortalBackend.security.UserDetailsImpl;
 import com.example.QuestionPortalBackend.services.AuthService;
 import com.example.QuestionPortalBackend.services.UsersService;
+import com.example.QuestionPortalBackend.services.UsersServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;

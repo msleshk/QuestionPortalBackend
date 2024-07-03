@@ -4,13 +4,12 @@ import com.example.QuestionPortalBackend.dto.UserDTO;
 import com.example.QuestionPortalBackend.dto.UserToUpdateDTO;
 import com.example.QuestionPortalBackend.exceptions.ValidationException;
 import com.example.QuestionPortalBackend.services.UsersService;
-import com.example.QuestionPortalBackend.util.UserMapper;
+import com.example.QuestionPortalBackend.services.UsersServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

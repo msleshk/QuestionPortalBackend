@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-//@ApiModel(description = "Question dto")
 public class QuestionDTO {
     private Integer id;
     @NotEmpty
@@ -79,5 +78,18 @@ public class QuestionDTO {
 
     public void setFromUserEmail(String fromUserEmail) {
         this.fromUserEmail = fromUserEmail;
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionDTO{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", answerType=" + answerType +
+                ", forUserEmail='" + forUserEmail + '\'' +
+                ", fromUserEmail='" + fromUserEmail + '\'' +
+                ", options=" + options +
+                '}';
     }
 }

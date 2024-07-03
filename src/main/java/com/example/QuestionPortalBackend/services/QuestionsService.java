@@ -1,76 +1,22 @@
 package com.example.QuestionPortalBackend.services;
 
 import com.example.QuestionPortalBackend.dto.QuestionDTO;
-import com.example.QuestionPortalBackend.exceptions.QuestionNotFoundException;
-import com.example.QuestionPortalBackend.exceptions.UserNotFoundException;
-import com.example.QuestionPortalBackend.models.Question;
-import com.example.QuestionPortalBackend.models.QuestionOption;
-import com.example.QuestionPortalBackend.models.User;
-import com.example.QuestionPortalBackend.repositories.QuestionsRepository;
-import com.example.QuestionPortalBackend.util.QuestionMapper;
-import com.example.QuestionPortalBackend.util.UserMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-@Service
-@Transactional(readOnly = true)
-public class QuestionsService {
-    private final QuestionsRepository questionsRepository;
-    private final UsersService usersService;
-    private final UserMapper userMapper;
-    private final QuestionMapper questionMapper;
+public interface QuestionsService {
 
-    public QuestionsService(QuestionsRepository questionsRepository, UsersService usersService, UserMapper userMapper, QuestionMapper questionMapper) {
-        this.questionsRepository = questionsRepository;
-        this.usersService = usersService;
-        this.userMapper = userMapper;
-        this.questionMapper = questionMapper;
-    }
+    public List<QuestionDTO> getQuestionsByUserId(int userId);
 
-    public List<QuestionDTO> getQuestionsByUserId(int userId) {
-        User user = userMapper.toEntity(usersService.findOne(userId));
-        List<Question> questions = questionsRepository.getQuestionsByFromUser(user);
-        return questions.stream()
-                .map(questionMapper::toDTO)
-                .collect(Collectors.toList());
-    }
+    public List<QuestionDTO> getQuestionsByForUserId(int userId);
 
-    public QuestionDTO findOne(int questionId) {
-        Optional<Question> questionOptional = questionsRepository.findById(questionId);
-        return questionMapper.toDTO(questionOptional
-                .orElseThrow(() -> new QuestionNotFoundException("Question not found")));
-    }
+    public void setAnswer(int id, QuestionDTO questionDTO);
 
-    @Transactional
-    public QuestionDTO addQuestion(QuestionDTO questionDTO) {
-        Question question = questionMapper.toEntity(questionDTO);
-        if (question.getQuestionOptions() != null) {
-            for (QuestionOption option : question.getQuestionOptions()) {
-                option.setQuestion(question);
-            }
-        }
-        questionsRepository.save(question);
-        return questionMapper.toDTO(question);
-    }
+    public QuestionDTO findOne(int questionId);
 
-    @Transactional
-    public QuestionDTO updateQuestion(int id, QuestionDTO questionDTO) {
-        Question existingQuestion = questionsRepository.findById(id)
-                .orElseThrow(() -> new QuestionNotFoundException("Question with id " + id + " not found"));
+    public QuestionDTO addQuestion(QuestionDTO questionDTO);
 
-        Question questionToUpdate = questionMapper.toEntity(questionDTO);
-        questionToUpdate.setId(id);
+    public QuestionDTO updateQuestion(int id, QuestionDTO questionDTO);
 
-        questionsRepository.save(questionToUpdate);
-        return questionMapper.toDTO(questionToUpdate);
-    }
-
-    @Transactional
-    public void deleteQuestion(int id){
-        questionsRepository.deleteById(id);
-    }
+    public void deleteQuestion(int id);
 }

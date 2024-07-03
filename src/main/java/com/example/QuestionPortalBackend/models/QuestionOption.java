@@ -2,6 +2,8 @@ package com.example.QuestionPortalBackend.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "Question_options")
 public class QuestionOption {
@@ -46,5 +48,18 @@ public class QuestionOption {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QuestionOption that = (QuestionOption) o;
+        return Objects.equals(id, that.id) && Objects.equals(optionText, that.optionText) && Objects.equals(question, that.question);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, optionText, question);
     }
 }

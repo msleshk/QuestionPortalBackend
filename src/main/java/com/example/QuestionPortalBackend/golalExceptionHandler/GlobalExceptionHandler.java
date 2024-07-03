@@ -14,25 +14,25 @@ import java.util.Map;
 public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleUserNotFoundException(UserNotFoundException exception){
+    public Map<String, String> handleUserNotFoundException(UserNotFoundException exception) {
         return Map.of("error", exception.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public Map<String, String> handleUserAlreadyExistsException(UserAlreadyExistsException exception){
+    public Map<String, String> handleUserAlreadyExistsException(UserAlreadyExistsException exception) {
         return Map.of("error", exception.getMessage());
     }
 
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleValidationException(ValidationException exception){
+    public Map<String, String> handleValidationException(ValidationException exception) {
         return Map.of("error", exception.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Map<String, String> handleGenericException(Exception exception){
-        return Map.of("error", "An unexpected error occurred "+exception.getMessage());
+    public Map<String, String> handleGenericException(Exception exception) {
+        return Map.of("error", "An unexpected error occurred " + exception.getMessage());
     }
 }
