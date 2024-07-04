@@ -1,12 +1,36 @@
 package com.example.QuestionPortalBackend.dto;
 
+import com.example.QuestionPortalBackend.models.AnswerType;
+//import io.swagger.annotations.ApiModel;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.List;
+
 public class QuestionDTO {
     private Integer id;
+    @NotEmpty
     private String question;
     private String answer;
-    private String answerType;
-    private Integer forUserId;
-    private Integer fromUserId;
+    @NotNull
+    private AnswerType answerType;
+    @NotEmpty
+    @Email
+    private String forUserEmail;
+    @NotEmpty
+    @Email
+    private String fromUserEmail;
+
+    private List<String> options;
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<String> options) {
+        this.options = options;
+    }
 
     public Integer getId() {
         return id;
@@ -32,27 +56,40 @@ public class QuestionDTO {
         this.answer = answer;
     }
 
-    public String getAnswerType() {
+    public AnswerType getAnswerType() {
         return answerType;
     }
 
-    public void setAnswerType(String answerType) {
+    public void setAnswerType(AnswerType answerType) {
         this.answerType = answerType;
     }
 
-    public Integer getForUserId() {
-        return forUserId;
+    public String getForUserEmail() {
+        return forUserEmail;
     }
 
-    public void setForUserId(Integer forUserId) {
-        this.forUserId = forUserId;
+    public void setForUserEmail(String forUserEmail) {
+        this.forUserEmail = forUserEmail;
     }
 
-    public Integer getFromUserId() {
-        return fromUserId;
+    public String getFromUserEmail() {
+        return fromUserEmail;
     }
 
-    public void setFromUserId(Integer fromUserId) {
-        this.fromUserId = fromUserId;
+    public void setFromUserEmail(String fromUserEmail) {
+        this.fromUserEmail = fromUserEmail;
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionDTO{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", answerType=" + answerType +
+                ", forUserEmail='" + forUserEmail + '\'' +
+                ", fromUserEmail='" + fromUserEmail + '\'' +
+                ", options=" + options +
+                '}';
     }
 }

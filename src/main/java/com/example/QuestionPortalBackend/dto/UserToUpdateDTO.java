@@ -1,6 +1,8 @@
 package com.example.QuestionPortalBackend.dto;
 
-public class UserToUpdateDTO extends UserDTO{
+
+public class UserToUpdateDTO extends UserDTO {
+
     private String currentPassword;
     private String newPassword;
 

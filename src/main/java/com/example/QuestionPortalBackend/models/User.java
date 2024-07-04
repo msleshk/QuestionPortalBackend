@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Table(name = "Users")
 public class User {
-    //TODO Do validation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,9 +24,9 @@ public class User {
     private String phoneNumber;
     @Column(name = "password")
     private String password;
-    @OneToMany(mappedBy = "forUser", orphanRemoval = true)
+    @OneToMany(mappedBy = "forUser", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Question> questionsForUser;
-    @OneToMany(mappedBy = "fromUser", orphanRemoval = true)
+    @OneToMany(mappedBy = "fromUser", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Question> questionsFromUser;
 
     public Integer getId() {

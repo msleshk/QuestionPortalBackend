@@ -1,5 +1,7 @@
 package com.example.QuestionPortalBackend.dto;
 
+
+
 public class LoginRequest {
 
     private String email;

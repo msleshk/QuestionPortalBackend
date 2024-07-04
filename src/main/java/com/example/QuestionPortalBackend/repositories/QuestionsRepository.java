@@ -7,5 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface QuestionsRepository extends JpaRepository<Question, Integer> {
-    List<Question> getQuestionsByForUser(User user);
+    List<Question> getQuestionsByForUser(User forUser);
+
+    List<Question> getQuestionsByFromUser(User fromUser);
 }
