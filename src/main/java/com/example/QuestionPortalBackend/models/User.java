@@ -24,9 +24,9 @@ public class User {
     private String phoneNumber;
     @Column(name = "password")
     private String password;
-    @OneToMany(mappedBy = "forUser", orphanRemoval = true)
+    @OneToMany(mappedBy = "forUser", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Question> questionsForUser;
-    @OneToMany(mappedBy = "fromUser", orphanRemoval = true)
+    @OneToMany(mappedBy = "fromUser", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Question> questionsFromUser;
 
     public Integer getId() {

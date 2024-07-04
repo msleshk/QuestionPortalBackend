@@ -15,4 +15,8 @@ public class WebSocketService {
     public void sendQuestionUpdate(QuestionDTO questionToSend) {
         messagingTemplate.convertAndSend("/topic/questions", questionToSend);
     }
+
+    public void sendQuestionDelete(int id){
+        messagingTemplate.convertAndSend("/topic/questions/delete", id);
+    }
 }

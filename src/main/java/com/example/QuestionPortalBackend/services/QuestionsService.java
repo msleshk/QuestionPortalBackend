@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface QuestionsService {
 
-    public List<QuestionDTO> getQuestionsByUserId(int userId);
+    List<QuestionDTO> getQuestionsByUserId(int userId);
 
-    public List<QuestionDTO> getQuestionsByForUserId(int userId);
+    List<QuestionDTO> getQuestionsByForUserId(int userId);
 
-    public void setAnswer(int id, QuestionDTO questionDTO);
+    void setAnswer(int id, QuestionDTO questionDTO);
 
-    public QuestionDTO findOne(int questionId);
+    QuestionDTO findOne(int questionId);
 
-    public QuestionDTO addQuestion(QuestionDTO questionDTO);
+    QuestionDTO addQuestion(QuestionDTO questionDTO);
 
-    public QuestionDTO updateQuestion(int id, QuestionDTO questionDTO);
+    QuestionDTO updateQuestion(int id, QuestionDTO questionDTO);
 
-    public void deleteQuestion(int id);
+    void deleteQuestion(int id);
 }

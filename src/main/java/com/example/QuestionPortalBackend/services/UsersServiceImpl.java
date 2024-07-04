@@ -34,18 +34,21 @@ public class UsersServiceImpl implements UsersService {
         this.userMapper = userMapper;
     }
 
+    @Override
     public List<UserDTO> findAll() {
         return usersRepository.findAll()
                 .stream().map(userMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public UserDTO findOne(int id) {
         return usersRepository.findById(id)
                 .map(userMapper::toDTO)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found."));
     }
 
+    @Override
     @Transactional
     public String updateUser(int id, UserToUpdateDTO userToUpdate) {
         User currentUser = usersRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!"));
@@ -73,6 +76,7 @@ public class UsersServiceImpl implements UsersService {
         return authService.authenticateUser(userToUpdate.getEmail(), userToUpdate.getPassword());
     }
 
+    @Override
     @Transactional
     public void deleteUser(int id, String password) {
         User user = usersRepository.findById(id)
@@ -85,6 +89,7 @@ public class UsersServiceImpl implements UsersService {
                 "Dear, " + user.getFirstName() + ", your profile was successfully deleted!");
     }
 
+    @Override
     public UserDTO getUserByEmail(String email) {
         Optional<User> user = usersRepository.findByEmail(email);
         if (user.isEmpty()) {
@@ -93,6 +98,7 @@ public class UsersServiceImpl implements UsersService {
         return userMapper.toDTO(user.get());
     }
 
+    @Override
     @Transactional
     public void registerUser(UserDTO userDTO) throws UserAlreadyExistsException {
         User user = userMapper.toEntity(userDTO);

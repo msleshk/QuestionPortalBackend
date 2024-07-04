@@ -34,6 +34,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         this.questionOptionRepository = questionOptionRepository;
     }
 
+    @Override
     public List<QuestionDTO> getQuestionsByUserId(int userId) {
         User user = userMapper.toEntity(usersService.findOne(userId));
         List<Question> questions = questionsRepository.getQuestionsByFromUser(user);
@@ -42,6 +43,7 @@ public class QuestionsServiceImpl implements QuestionsService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<QuestionDTO> getQuestionsByForUserId(int userId) {
         User user = userMapper.toEntity(usersService.findOne(userId));
         List<Question> questions = questionsRepository.getQuestionsByForUser(user);
@@ -50,6 +52,7 @@ public class QuestionsServiceImpl implements QuestionsService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     @Transactional
     public void setAnswer(int id, QuestionDTO questionDTO) {
         Question existingQuestion = questionsRepository.findById(id)
@@ -57,12 +60,14 @@ public class QuestionsServiceImpl implements QuestionsService {
         existingQuestion.setAnswer(questionDTO.getAnswer());
     }
 
+    @Override
     public QuestionDTO findOne(int questionId) {
         Optional<Question> questionOptional = questionsRepository.findById(questionId);
         return questionMapper.toDTO(questionOptional
                 .orElseThrow(() -> new QuestionNotFoundException("Question not found")));
     }
 
+    @Override
     @Transactional
     public QuestionDTO addQuestion(QuestionDTO questionDTO) {
         UserDTO forUser = usersService.getUserByEmail(questionDTO.getForUserEmail());
@@ -77,6 +82,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         return questionMapper.toDTO(question);
     }
 
+    @Override
     @Transactional
     public QuestionDTO updateQuestion(int id, QuestionDTO questionDTO) {
         Question existingQuestion = questionsRepository.findById(id)
@@ -103,6 +109,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         return questionMapper.toDTO(existingQuestion);
     }
 
+    @Override
     @Transactional
     public void deleteQuestion(int id) {
         questionsRepository.deleteById(id);
